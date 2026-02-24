@@ -1,10 +1,10 @@
 services:
   configurator:
     environment:
-      PROJECT_CLONE_URL: https://github.com/ajeetraina/labspace-cagent
+      PROJECT_CLONE_URL: https://github.com/dockersamples/labspace-cagent
 
   mcp-gateway:
-    image: docker/mcp-gateway
+    image: docker/mcp-gateway:v0.40.0
     container_name: labspace-mcp-gateway
     command:
       - --port=8080

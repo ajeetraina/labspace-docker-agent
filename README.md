@@ -17,15 +17,39 @@ In this workshop we will learn:
 
 ## Launch the Labspace
 
-To launch the labsapce, run the following command:
+To launch the lab, run the following command:
 
 ```bash
-  CONTENT_PATH=$PWD docker compose -f oci://dockersamples/labspace-content-dev -f .labspace/compose.override.yaml up
+docker compose -f oci://dockersamples/labspace-cagent up
 ```
-
  
 and then open your browser to [https://localhost:3030](https://localhost:3030)
 
-## Using the Docker Desktop extension
+### Using the Docker Desktop extension
 
-If you have the Labspace extension installed (docker extension install dockersamples/labspace-extension if not), you can also click [this link](https://open.docker.com/dashboard/extension-tab?extensionId=dockersamples/labspace-extension&location=dockersamples/labspace-cagent&title=cagent) to launch the Labspace.
+If you have the Labspace extension installed (`docker extension install dockersamples/labspace-extension` if not), you can also click [this link](https://open.docker.com/dashboard/extension-tab?extensionId=dockersamples/labspace-extension&location=dockersamples/labspace-cagent&title=cagent) to launch the Labspace.
+
+
+## Contributing
+
+If you find something wrong or something that needs to be updated, feel free to submit a PR. If you want to make a larger change, feel free to fork the repo into your own repository.
+
+**Important note:** If you fork it, you will need to update the GHA workflow to point to your own Hub repo.
+
+1. Clone this repo
+
+2. Start the Labspace in content development mode:
+
+    ```bash
+    # On Mac/Linux
+    CONTENT_PATH=$PWD docker compose up --watch
+
+    # On Windows with PowerShell
+    $Env:CONTENT_PATH = (Get-Location).Path; docker compose up --watch
+    ```
+
+3. Open the Labspace at http://localhost:3030.
+
+4. Make the necessary changes and validate they appear as you expect in the Labspace
+
+    Be sure to check out the [docs](https://github.com/dockersamples/labspace-infra/tree/main/docs) for additional information and guidelines.

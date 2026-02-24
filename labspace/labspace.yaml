@@ -4,16 +4,16 @@ description: |
 
 sections:
   - title: Introduction
-    contentPath: .labspace/01-introduction.md
+    contentPath: 01-introduction.md
   - title: Getting Started
-    contentPath: .labspace/02-getting-started.md
+    contentPath: 02-getting-started.md
   - title: Using Built-in tools
-    contentPath: .labspace/03-using-builtin-tools.md  
+    contentPath: 03-using-builtin-tools.md  
   - title: Using MCP
-    contentPath: .labspace/04-using-mcp.md
+    contentPath: 04-using-mcp.md
   - title: Sharing agents
-    contentPath: .labspace/05-sharing-agents.md
+    contentPath: 05-sharing-agents.md
   - title: Introduction to Sub-agents
-    contentPath: .labspace/06-sub-agents.md
+    contentPath: 06-sub-agents.md
   - title: Conclusion
-    contentPath: .labspace/07-conclusion.md
+    contentPath: 07-conclusion.md
