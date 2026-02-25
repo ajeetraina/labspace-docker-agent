@@ -22,64 +22,84 @@ whiteboard that the model can use to jot down its thoughts.
 Read more about the thinking tool
 [here](https://www.anthropic.com/engineering/claude-think-tool).
 
-To use this tool, add the `type: think` tool to the toolset of your agent. Create the file:
+To use this tool, add the `type: think` tool to the toolset of your agent. 
 
-```bash
-cat > think_agent.yaml << 'EOF'
-version: "2"
+1. Create a new agent in the `think_agent.yaml` file with the following content:
 
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: You talk like a pirate
-    toolsets:
-      - type: think
-EOF
-```
+    ```yaml save-as=think_agent.yaml
+    version: "2"
 
-Run the agent:
+    agents:
+      root:
+        model: $$model$$
+        instruction: You talk like a pirate
+        toolsets:
+          - type: think
+    ```
 
-```bash
-cagent run think_agent.yaml
-```
+2. Run the agent:
 
-You can try by asking your pirate agent: `Think before you answer, where is the treasure map?`
+    ```bash
+    cagent run think_agent.yaml
+    ```
+
+3. Try thinking by asking your pirate agent: 
+
+    ```bash
+    Think before you answer, where is the treasure map?
+    ```
 
 The keen-eyed might have noticed the `version: "2"` on the top of the YAML file
 above. While `cagent` is in active development and breaking things, we _try_ not
 to break user's existing agents. If there is no version defined in the YAML
-file, the default version is `0`, the current latest version is `2`, always use
+file, the default version is `0`. The current latest version is `2`. Always try to use
 the latest version.
 
 ### Memory
 
 The memory tool gives the agent the ability to remember things about the user.
 
-Create this agent:
+1. Create a new agent by defining a `memory_agent.yaml` file with the following contents:
 
-```bash
-cat > memory_agent.yaml << 'EOF'
-version: "2"
+    ```yaml save-as=memory_agent.yaml
+    version: "2"
 
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: You are a personal assistant
-    toolsets:
-      - type: memory
-        path: ./memory.db
-EOF
-```
+    agents:
+      root:
+        model: $$model$$
+        instruction: You are a personal assistant
+        toolsets:
+          - type: memory
+            path: ./memory.db
+    ```
 
-Run the agent:
+2. Run the agent:
 
-```bash
-cagent run memory_agent.yaml
-```
+    ```bash
+    cagent run memory_agent.yaml
+    ```
 
-Tell it your name and some random fact about you. Something like `I'm John and I'm a software engineer`. You should see it calling the memory tools to remember facts about you.
+3. Tell it your name and some random fact about you. Something like:
 
-If you then quit cagent (press `Ctrl+C`) and start a new session with this agent, you can ask it what it knows about you. It should correctly look up its internal memory and tell you what it knows. For example: `Who am I?` or `What do I do for a living?`
+    ```console
+    I'm John and I'm a software engineer
+    ```
+    
+    You should see it calling the memory tools to remember facts about you.
+
+4. Quit the agent by pressing `Ctrl+C`.
+
+5. Start a new session with this agent:
+
+    ```bash
+    cagent run memory_agent.yaml
+    ```
+
+6. Ask it what it knows about you. It should correctly look up its internal memory and tell you what it knows. For example: 
+
+    ```console
+    Who am I and what do I do for a living?
+    ```
 
 ### Todo
 
@@ -89,32 +109,28 @@ working on a complex task.
 
 The `todo` toolset can be useful for a developer agent. Breaking down a task
 into smaller, more manageable pieces is how most developers work. Let's start
-creating our developer agent right now. Create a `developer.yaml` file:
+creating our developer agent right now. 
 
-```bash
-cat > developer.yaml << 'EOF'
-version: "2"
+1. Create a `developer.yaml` file with the following contents:
 
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: You are an amazing developer
-    toolsets:
-      - type: todo
-EOF
-```
+    ```yaml save-as=developer.yaml
+    version: "2"
 
-Run the agent:
+    agents:
+      root:
+        model: $$model$$
+        instruction: You are an amazing developer
+        toolsets:
+          - type: todo
+    ```
 
-```bash
-cagent run developer.yaml
-```
+2. Run the agent:
 
-_Note:_ Here we changed the model used from `gpt-4o-mini` to `gpt-4o`. Larger
-models are usually better at tool calling and following instructions. Feel free
-to test out as many models as you wish with different setups.
+    ```bash
+    cagent run developer.yaml
+    ```
 
-Try this agent, see how it _magically_ creates todo lists for its tasks and
+3. Try this agent, see how it _magically_ creates todo lists for its tasks and
 loops until the todos are done.
 
 ### Development Related Builtin Tools
@@ -125,30 +141,36 @@ commands or read/write files or directories.
 - `shell`
 - `filesystem`
 
-Let's enhance our developer agent with these tools. Update the `developer.yaml` file:
+Let's enhance our developer agent with these tools. 
 
-```bash
-cat > developer.yaml << 'EOF'
-version: "2"
+1. Update the `developer.yaml` file to now have the following contents:
 
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: You are an amazing developer
-    toolsets:
-      - type: todo
-      - type: shell
-      - type: filesystem
-EOF
-```
+    ```yaml save-as=developer.yaml
+    version: "2"
 
-This is basically all it takes to have a basic developer agent. Try it out:
+    agents:
+      root:
+        model: $$model$$
+        instruction: You are an amazing developer
+        toolsets:
+          - type: todo
+          - type: shell
+          - type: filesystem
+    ```
 
-```bash
-cagent run developer.yaml
-```
+    This is basically all it takes to have a basic developer agent. 
+    
+2. Try it out:
 
-Ask it to: `write a snake game in an index.html file`
+    ```bash
+    cagent run developer.yaml
+    ```
+
+3. Ask the agent to create a web-based version of snake:
+
+    ```console
+    Write a snake game in an index.html file
+    ```
 
 ## Extra
 
@@ -159,20 +181,18 @@ just wasting tokens. `cagent` can automatically add information about the
 environment the agent is working on by adding `add_environment_info: true` to the
 agent definition:
 
-```bash
-cat > developer.yaml << 'EOF'
+```yaml save-as=developer.yaml
 version: "2"
 
 agents:
   root:
-    model: openai/gpt-4o
+    model: $$model$$
     instruction: You are an amazing developer
     add_environment_info: true
     toolsets:
       - type: todo
       - type: shell
       - type: filesystem
-EOF
 ```
 
 Run this agent again:
@@ -192,13 +212,12 @@ The information that is added to its system prompt with this is:
 If you think that your agent needs to know what the current date is, you can add
 this to its system prompt too:
 
-```bash
-cat > developer.yaml << 'EOF'
+```yaml save-as=developer.yaml
 version: "2"
 
 agents:
   root:
-    model: openai/gpt-4o
+    model: $$model$$
     instruction: You are an amazing developer
     add_environment_info: true
     add_date: true
@@ -206,7 +225,6 @@ agents:
       - type: todo
       - type: shell
       - type: filesystem
-EOF
 ```
 
 Run this agent again:

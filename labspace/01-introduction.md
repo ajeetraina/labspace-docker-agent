@@ -29,37 +29,15 @@ This Labspace comes with everything you need to get started:
 
 ## Prerequisites
 
-Before starting this workshop, you should have:
+Before starting this workshop, you should have an API key to a model provider. The following providers are supported:
 
-1. **cagent installed** - Follow the installation instructions below
-2. **AI API access** - Choose one of:
-   - OpenAI API key (for GPT-4, GPT-4o)
-   - Anthropic API key (for Claude models)
-   - Google API key (for Gemini models)
+- OpenAI 
+- Anthropic
+- Google (for Gemini models)
 
-## Step 1: Install cagent
+Additionally, this lab will make use of Docker's MCP Gateway, which should already be up and running.
 
-Since you're running this lab on Ubuntu Linux, let's install cagent directly. Run the following commands:
-
-```bash
-# Download the latest cagent Linux binary
-curl -L -o /tmp/cagent https://github.com/docker/cagent/releases/latest/download/cagent-linux-amd64
-
-# Make it executable
-chmod +x /tmp/cagent
-
-# Move it to a location in your PATH
-sudo mv /tmp/cagent /usr/local/bin/cagent
-
-# Verify installation
-cagent version
-```
-
-You should see output showing the cagent version.
-
-## Step 2: Verify Pre-Configured Services
-
-Let's make sure the Labspace services are running:
+Verify it's running by running the following command:
 
 ```bash
 # Check MCP Gateway
@@ -67,6 +45,7 @@ curl http://labspace-mcp-gateway:8080/sse
 ```
 
 If the command returns successfully, you're ready to go!
+
 
 ## Workshop Overview
 
@@ -82,7 +61,7 @@ agents that do things for you.
 
 | Step | Topic | Description |
 |------|-------|-------------|
-| 2 | Getting Started | Create your first agent and set up API keys |
+| 2 | Getting Started | Create your first agent |
 | 3 | Built-in Tools | File operations, shell commands, memory, and todo tracking |
 | 4 | MCP Integration | Connect to external services (fetch, search, documentation) |
 | 5 | Sharing Agents | Push and pull agents via Docker Hub |
@@ -90,4 +69,3 @@ agents that do things for you.
 | 7 | Model Runner | Run local AI models on your local machine (reference only) |
 | 8 | Conclusion | Next steps and advanced topics |
 
-Let's get started!

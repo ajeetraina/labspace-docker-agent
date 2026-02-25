@@ -6,40 +6,38 @@ Sharing agents with cagent is extremely simple - you can push and pull agents to
 
 ### Setting Up Your Docker Hub ID
 
-Enter your Docker Hub username:
+Because you will be pushing and pulling agents from Hub, you need to be authenticated.
 
-::variableDefinition[dockerhubid]{prompt="Enter your Docker Hub username"}
-
-Set your Docker Hub ID as an environment variable:
-```bash
-export DOCKER_HUB_ID=$$dockerhubid$$
-```
-
-Verify it's set correctly:
-```bash
-echo $DOCKER_HUB_ID
-```
+::variableDefinition[dockerhubid]{prompt="What is your Docker Hub username?"}
 
 Make sure you're logged in to Docker Hub:
+
 ```bash
 docker login
 ```
 
 ### Push Your Agent
+
+Push your developer agent using the following `cagent push` command:
+
 ```bash
-cagent push developer.yaml $DOCKER_HUB_ID/cagent-developer
+cagent push developer.yaml $$dockerhubid$$/cagent-developer
 ```
 
 ### Pull an Agent
 
-You can pull that agent on any machine:
+Pull your agent on any other machine by using the `cagent pull` command:
+
 ```bash
-cagent pull $DOCKER_HUB_ID/cagent-developer
+cagent pull $$dockerhubid$$/cagent-developer
 ```
 
 ### Run Directly from Registry
+
+You can also use `cagent run` with a reference to an agent stored in a registry:
+
 ```bash
-cagent run $DOCKER_HUB_ID/cagent-developer
+cagent run $$dockerhubid$$/cagent-developer
 ```
 
 

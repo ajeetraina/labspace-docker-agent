@@ -1,85 +1,101 @@
 # Step 2: Getting Started with cagent
 
-## First, let's set up your API keys
+## Install cagent
 
-To use cagent, you'll need at least one API key from your preferred AI provider. Please provide the API key(s) you want to use:
+1. Run the following commands to install cagent into your lab environment:
+
+    ```bash
+    # Download the latest cagent Linux binary
+    curl -L -o /tmp/cagent https://github.com/docker/cagent/releases/latest/download/cagent-linux-amd64
+
+    # Make it executable
+    chmod +x /tmp/cagent
+
+    # Move it to a location in your PATH
+    sudo mv /tmp/cagent /usr/local/bin/cagent
+    ```
+
+2. Once the install is completed, verify it by checking the version information:
+
+    ```bash
+    cagent version
+    ```
+
+    You should see output showing the cagent version.
+
+
+## API setup
+
+In order to complete this lab, you will need an API key from one of the following providers:
+
+::variableSetButton[Use OpenAI]{variables="provider=openai,model=openai/gpt-5-nano,modelShort=gpt-5-nano"}
+
+::variableSetButton[Use Anthropic]{variables="provider=anthropic,model=anthropic/claude-sonnet-4-6,modelShort=claude-sonnet-4-6"}
+
+::variableSetButton[Use Gemini]{variables="provider=gemini,model=google/gemini-2.5-flash,modelShort=gemini-2.5-flash"}
+
+&nbsp;
+
+:::conditionalDisplay{variable="provider" requiredValue="openai"}
+### OpenAI configuration
 
 ::variableDefinition[openaikey]{prompt="Enter your OpenAI API key (or leave blank if not using OpenAI)"}
 
+```bash
+export OPENAI_API_KEY=$$openaikey$$
+```
+:::
+
+
+:::conditionalDisplay{variable="provider" requiredValue="anthropic"}
+### Anthropic configuration
+
 ::variableDefinition[anthropickey]{prompt="Enter your Anthropic API key (or leave blank if not using Anthropic)"}
+
+```bash
+# For Anthropic models (if you provided an Anthropic key)
+export ANTHROPIC_API_KEY=$$anthropickey$$
+```
+:::
+
+
+:::conditionalDisplay{variable="provider" requiredValue="gemini"}
+### Gemini configuration
 
 ::variableDefinition[googlekey]{prompt="Enter your Google/Gemini API key (or leave blank if not using Google)"}
 
-## Setting Up Your Environment
-
-Now that you've provided your API key(s), let's set them in your environment. Copy and run the following commands in the terminal based on the provider(s) you're using:
-
 ```bash
-# For OpenAI models (if you provided an OpenAI key)
-export OPENAI_API_KEY=$$openaikey$$
-
-# For Anthropic models (if you provided an Anthropic key)
-export ANTHROPIC_API_KEY=$$anthropickey$$
-
-# For Gemini models (if you provided a Google key)
 export GOOGLE_API_KEY=$$googlekey$$
 ```
-
-> **Note:** You only need to set the API keys for the providers you plan to use. At minimum, you need one valid API key to proceed.
-
-## Your First Agent
-
-Let's create the simplest possible agent. Run this command in the terminal to create `basic_hello.yaml`:
-
-```bash
-cat > basic_hello.yaml << 'EOF'
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: You talk like a pirate
-EOF
-```
-
-Now let's run this amazing agent:
-
-```bash
-cagent run basic_hello.yaml
-```
-
-If everything is setup correctly, you should see the TUI and be able to ask a
-question to your agent and it should answer in pirate speak.
+:::
 
 
+## Writing your First Agent
 
-To exit the TUI, press `Ctrl+C`.
+Let's create the simplest possible agent. 
 
-## Choosing Different Models
+1. Create a file named `basic_hello.yaml` with the following contents:
 
-If you don't have access to OpenAI, or want to use a different provider, you can easily swap the model in your YAML configuration. Visit [models.dev](https://models.dev) and look for models that exist for your provider.
+    ```yaml save-as=basic_hello.yaml
+    agents:
+      root:
+        model: $$model$$
+        instruction: You talk like a pirate
+    ```
 
-`cagent` supports these providers:
+2. Run this amazing agent using the following command:
 
-- **`openai`** - OpenAI models (GPT-4, GPT-4o, etc.)
-- **`anthropic`** - Anthropic models (Claude 3.5 Sonnet, etc.)
-- **`google`** - Google Gemini models
-- **`dmr`** - Use any local [Docker Model Runner](https://docs.docker.com/ai/model-runner/) model that you already have pulled locally
+    ```bash
+    cagent run basic_hello.yaml
+    ```
 
-For example, to use Anthropic's Claude instead, create a new file:
+3. Ask your agent a simple question to see it answer in pirate speak:
 
-```bash
-cat > basic_hello_claude.yaml << 'EOF'
-agents:
-  root:
-    model: anthropic/claude-3-5-sonnet-20241022
-    instruction: You talk like a pirate
-EOF
-```
+    ```console
+    Give me an interesting and lesser-known fact about Docker
+    ```
 
-Then run it:
-
-```bash
-cagent run basic_hello_claude.yaml
-```
+4. To exit the agent's interface, press `Ctrl+C`.
 
 
 ## Next Steps

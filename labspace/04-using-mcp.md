@@ -17,152 +17,172 @@ In this Labspace, we've pre-configured an MCP Gateway with the following servers
 Let's verify the MCP Gateway is running:
 
 ```bash
-curl http://mcp-gateway:8080/health
+curl http://mcp-gateway:8080/health -v
 ```
+
+If it's up and running, you should see a `200 OK` response.
 
 ## Using the Fetch MCP Server
 
-Create an agent that can fetch and summarize web pages:
+1. Create an agent that can fetch and summarize web pages in a file named `fetch_agent.yaml`:
 
-```bash
-cat > fetch_agent.yaml << 'EOF'
-version: "2"
+    ```yaml save-as=fetch_agent.yaml
+    version: "2"
 
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: Summarize URLs for users. Use the fetch tool to retrieve web pages.
-    toolsets:
-      - type: mcp
-        remote:
-          url: http://mcp-gateway:8080
-          transport_type: sse
-EOF
-```
+    agents:
+      root:
+        model: $$model$$
+        instruction: Summarize URLs for users. Use the fetch tool to retrieve web pages.
+        toolsets:
+          - type: mcp
+            remote:
+              url: http://mcp-gateway:8080
+              transport_type: sse
+    ```
 
-Run this agent:
+2. Start the agent:
 
-```bash
-cagent run fetch_agent.yaml
-```
+    ```bash
+    cagent run fetch_agent.yaml
+    ```
 
-Ask it: `fetch docker.com and summarize what Docker does`
+3. Ask it to fetch web content and summarize it: 
 
-You will see the agent calling the `fetch` tool from the MCP server!
+    ```console
+    Fetch docker.com and summarize what Docker's main focus is based on its website
+    ```
+
+    You will see the agent calling the `fetch` tool from the MCP server!
+
+4. Exit the agent with `Ctrl+C`
 
 ## Using the DuckDuckGo MCP Server
 
 The same gateway provides web search capabilities:
 
-```bash
-cat > search_agent.yaml << 'EOF'
-version: "2"
+1. Create a search agent in a file named `search_agent.yaml` with the following contents:
 
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: |
-      You are a research assistant. 
-      Use the duckduckgo search tool to find information.
-      Always cite your sources.
-    toolsets:
-      - type: mcp
-        remote:
-          url: http://mcp-gateway:8080
-          transport_type: sse
-EOF
-```
+    ```yaml save-as=search_agent.yaml
+    version: "2"
 
-Run the agent:
+    agents:
+      root:
+        model: $$model$$
+        instruction: |
+          You are a research assistant. 
+          Use the duckduckgo search tool to find information.
+          Always cite your sources.
+        toolsets:
+          - type: mcp
+            remote:
+              url: http://mcp-gateway:8080
+              transport_type: sse
+    ```
 
-```bash
-cagent run search_agent.yaml
-```
+2. Run the agent:
 
-Ask it: `Search for the latest news about Docker containers`
+    ```bash
+    cagent run search_agent.yaml
+    ```
+
+3. Ask it to search for recent news about containers: 
+
+    ```console
+    Search for the latest news about Docker containers
+    ```
+
+4. Exit the agent with `Ctrl+C`
 
 ## Using Context7 for Documentation
 
-Context7 provides up-to-date documentation for libraries and frameworks:
+Context7 provides up-to-date documentation for libraries and frameworks.
 
-```bash
-cat > docs_agent.yaml << 'EOF'
-version: "2"
+1. Create a docs agent by defining a `docs_agent.yaml` file with the following contents:
 
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: |
-      You are a documentation expert.
-      Use context7 to find accurate, up-to-date documentation for any library.
-    toolsets:
-      - type: mcp
-        remote:
-          url: http://mcp-gateway:8080
-          transport_type: sse
-EOF
-```
+    ```yaml save-as=docs_agent.yaml
+    version: "2"
 
-Run it:
+    agents:
+      root:
+        model: $$model$$
+        instruction: |
+          You are a documentation expert.
+          Use context7 to find accurate, up-to-date documentation for any library.
+        toolsets:
+          - type: mcp
+            remote:
+              url: http://mcp-gateway:8080
+              transport_type: sse
+    ```
 
-```bash
-cagent run docs_agent.yaml
-```
+2. Start the agent:
 
-Ask it: `How do I set up a basic Express.js server? Use context7 to get the latest documentation.`
+    ```bash
+    cagent run docs_agent.yaml
+    ```
+
+3. Ask it a question that will reference the documentation: 
+
+    ```console
+    How do I set up a basic Express.js server? Use context7 to get the latest documentation.
+    ```
+
+4. Exit the agent with `Ctrl+C`
 
 
 ## Enhancing Our Developer Agent
 
-Let's combine everything we've learned to create a powerful developer agent:
+Let's combine everything we've learned to create a powerful developer agent.
 
-```bash
-cat > developer.yaml << 'EOF'
-version: "2"
+1. Create a new `developer.yaml` that adds all of these additional tools and capabilities:
 
-agents:
-  root:
-    model: openai/gpt-4o
-    instruction: |
-      You are an amazing developer.
-      Use available tools to:
-      - Search for information (duckduckgo)
-      - Fetch documentation (fetch, context7)
-      - Read and write files (filesystem)
-      - Run commands (shell)
-      - Track your tasks (todo)
-    add_environment_info: true
-    add_date: true
-    toolsets:
-      - type: todo
-      - type: shell
-      - type: filesystem
-      - type: mcp
-        remote:
-          url: http://mcp-gateway:8080
-          transport_type: sse
-EOF
-```
+    ```yaml save-as=developer.yaml
+    version: "2"
 
-Run this agent:
+    agents:
+      root:
+        model: $$model$$
+        instruction: |
+          You are an amazing developer.
+          Use available tools to:
+          - Search for information (duckduckgo)
+          - Fetch documentation (fetch, context7)
+          - Read and write files (filesystem)
+          - Run commands (shell)
+          - Track your tasks (todo)
+        add_environment_info: true
+        add_date: true
+        toolsets:
+          - type: todo
+          - type: shell
+          - type: filesystem
+          - type: mcp
+            remote:
+              url: http://mcp-gateway:8080
+              transport_type: sse
+    ```
 
-```bash
-cagent run developer.yaml
-```
+2. Run this agent:
 
-Ask this:
+    ```bash
+    cagent run developer.yaml
+    ```
 
-```
-Create a directory "server" and write a Node.js Express server with TypeScript. 
-The server should be a key-value store with GET, PUT, and DELETE endpoints.
-Use context7 to get the latest Express.js documentation.
-```
+3. Ask this:
 
-The agent will:
-1. Use context7 to fetch Express.js documentation
-2. Create the directory structure
-3. Write the TypeScript server code
-4. Set up the necessary configuration files
+    ```console
+    Create a directory "server" and write a Node.js Express server with TypeScript. 
+    The server should be a key-value store with GET, PUT, and DELETE endpoints.
+    Use context7 to get the latest Express.js documentation.
+    ```
+
+    The agent will:
+    1. Use context7 to fetch Express.js documentation
+    2. Create the directory structure
+    3. Write the TypeScript server code
+    4. Set up the necessary configuration files
+
+4. Exit the agent with `Ctrl+C`
 
 
 ## Next Steps
