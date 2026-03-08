@@ -1,24 +1,24 @@
-# Step 2: Getting Started with cagent
+# Step 2: Getting Started with Docker Agent
 
-## Install cagent
+## Install Docker Agent
 
 1. Run the following commands to install cagent into your lab environment:
 
     ```bash
     # Download the latest cagent Linux binary
-    curl -L -o /tmp/cagent https://github.com/docker/cagent/releases/latest/download/cagent-linux-amd64
+    curl -L -o /tmp/cagent https://github.com/docker/docker-agent/releases/latest/download/docker-agent-linux-amd64
 
     # Make it executable
-    chmod +x /tmp/cagent
+    chmod +x /tmp/docker-agent
 
     # Move it to a location in your PATH
-    sudo mv /tmp/cagent /usr/local/bin/cagent
+    sudo mv /tmp/cagent /usr/local/bin/docker-agent
     ```
 
 2. Once the install is completed, verify it by checking the version information:
 
     ```bash
-    cagent version
+    docker agent version
     ```
 
     You should see output showing the cagent version.
@@ -86,7 +86,7 @@ Let's create the simplest possible agent.
 2. Run this amazing agent using the following command:
 
     ```bash
-    cagent run basic_hello.yaml
+    docker agent run basic_hello.yaml
     ```
 
 3. Ask your agent a simple question to see it answer in pirate speak:
@@ -100,4 +100,4 @@ Let's create the simplest possible agent.
 
 ## Next Steps
 
-In Step 3, we'll dive deeper into agent configuration and explore the powerful built-in tools that cagent provides for file operations, web browsing, and more.
+In Step 3, we'll dive deeper into agent configuration and explore the powerful built-in tools that Docker Agent provides for file operations, web browsing, and more.
