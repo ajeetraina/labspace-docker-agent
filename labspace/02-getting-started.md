@@ -5,14 +5,14 @@
 1. Run the following commands to install Docker Agent into your lab environment:
 
     ```bash
-    # Download the latest cagent Linux binary
-    curl -L -o /tmp/cagent https://github.com/docker/docker-agent/releases/latest/download/docker-agent-linux-amd64
+    # Download the latest Docker Agent Linux binary
+    curl -L -o /tmp/docker-agent https://github.com/docker/docker-agent/releases/latest/download/docker-agent-linux-amd64
 
     # Make it executable
     chmod +x /tmp/docker-agent
 
     # Move it to a location in your PATH
-    sudo mv /tmp/cagent /usr/local/bin/docker-agent
+    sudo mv /tmp/docker-agent /usr/local/bin/docker-agent
     ```
 
 2. Once the install is completed, verify it by checking the version information:
