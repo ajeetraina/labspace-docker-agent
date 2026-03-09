@@ -8,8 +8,9 @@
     # Download the latest Docker Agent Linux binary
     curl -L -o /tmp/docker-agent https://github.com/docker/docker-agent/releases/latest/download/docker-agent-linux-amd64
 
-    # Make it executable
-    chmod +x /tmp/docker-agent
+    # Install as a Docker CLI plugin
+    mkdir -p ~/.docker/cli-plugins
+    mv /tmp/docker-agent ~/.docker/cli-plugins/docker-agent
 
     # Move it to a location in your PATH
     sudo mv /tmp/docker-agent /usr/local/bin/docker-agent
