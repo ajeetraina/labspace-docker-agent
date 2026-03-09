@@ -22,7 +22,7 @@
     docker agent version
     ```
 
-    You should see output showing the cagent version.
+    You should see output showing the Docker Agent version.
 
 
 ## API setup
