@@ -55,7 +55,7 @@ own purpose.
 
 ## Advanced Example: Development Team
 
-Here is an example used by cagent's PM. It defines a team of 3 agents:
+Here is an example used by Docker Agent's PM. It defines a team of 3 agents:
 
 - a PM
 - a designer  
