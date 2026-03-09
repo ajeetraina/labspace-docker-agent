@@ -6,7 +6,7 @@ Welcome to this hands-on workshop on building intelligent agents using Docker Ag
 This workshop will take you from basic agent concepts to building sophisticated
 multi-agent teams that can handle complex real-world tasks.
 
-## What is cagent?
+## What is Docker Agent?
 
 Docker Agent is a powerful framework for building and orchestrating AI agents. Unlike
 simple chatbots, Docker Agent can:
