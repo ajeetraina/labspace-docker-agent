@@ -2,7 +2,7 @@
 
 ## Install Docker Agent
 
-1. Run the following commands to install cagent into your lab environment:
+1. Run the following commands to install Docker Agent into your lab environment:
 
     ```bash
     # Download the latest cagent Linux binary
